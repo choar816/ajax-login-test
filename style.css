@@ -1,0 +1,29 @@
+#app {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form {
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    padding: 40px;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+.dataLoadButton {
+    width: 100%;
+    padding: 10px 0;
+}
+
+p {
+    line-height: 1.6em;
+}
+
+p button {
+    width: 100%;
+}

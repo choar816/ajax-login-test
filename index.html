@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 통신 연습</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main id="app">
+        <form action="">
+            <div>
+                <label>아이디 : 
+                    <input type="text" class="id">
+                </label>
+            </div>
+            <div>
+                <label>비밀번호 : 
+                    <input type="password" class="pw">
+                </label>
+            </div>
+            <button type="button" class="dataLoadButton">로그인!!</button>
+        </form>
+        <p></p>
+    </main>
+    
+    <script>
+        let userData;
+
+        function success(userDataParams) {
+            $('form').remove();
+            $('p').append(`
+                ${userDataParams.name}님 환영합니다.<br>
+                멋사코인 : ${userDataParams.phone.split('-')[1]}억원<br>
+                등급 : ${userDataParams.grade}<br>
+                <button>로그아웃</button>
+            `);
+        }
+        function fail() {
+            $('form').remove();
+            $('p').append(`fail`);
+        }
+
+        $('.dataLoadButton').click(function() {
+            $.ajax({
+                url: 'https://raw.githubusercontent.com/paullabkorea/ajaxlogintest/main/userdata.json', 
+                async: true, 
+                success: function(response){
+                    console.log(typeof response);
+                    console.log(JSON.parse(response));
+                    let id = $('.id').val()
+                    let pw = $('.pw').val()
+
+                    response = JSON.parse(response);
+                    userData = response.find(user => user.id === id && user.pw === pw);
+
+                    // 로그인 성공시
+                    if (userData) {
+                        success(userData);
+                    }
+                    // 로그인 실패시
+                    else {
+                        fail();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
